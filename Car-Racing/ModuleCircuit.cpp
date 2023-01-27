@@ -12,19 +12,12 @@ ModuleCircuit::ModuleCircuit(Application* app, bool start_enabled) : Module(app,
 ModuleCircuit::~ModuleCircuit()
 {}
 
-bool ModuleCircuit::Init()
-{
-	LOG("Initialising Circuit");
-
-	
-
-	return true;
-}
-
 bool ModuleCircuit::Start()
 {
 	LOG("Loading Circuit");
-LoadAllCircuitObjects();
+	
+	LoadAllCircuitObjects();
+	
 	return true;
 }
 
@@ -39,15 +32,27 @@ bool ModuleCircuit::CleanUp()
 // Update: draw background
 update_status ModuleCircuit::Update(float dt)
 {
-	tuputamadre->Render();
+	CubeListItem = CubeWallFloorList.getFirst();
+
+	while (CubeListItem != NULL)
+	{
+		CubeListItem->data->Render();
+		CubeListItem = CubeListItem->next;
+	}
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleCircuit::LoadAllCircuitObjects()
 {
+	CreateWallOrFloor(vec3(3, 1, 1), vec3(1, 1, 1));
+}
+
+// Position is the one of the center of mass (center of the cube)
+void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos)
+{
 	// Create rigid body
-	btBoxShape* floorshape = new btBoxShape(btVector3(1, 1, 1));
+	btBoxShape* floorshape = new btBoxShape(btVector3(size.x / 2, size.y / 2, size.z / 2));
 	btCollisionShape* colShape = floorshape;
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState();
@@ -56,13 +61,15 @@ void ModuleCircuit::LoadAllCircuitObjects()
 
 	// Add the rigid to the world
 	App->physics->world->addRigidBody(body);
-
-	// Create PhysBody for the rigid
-	floor1xdpb = new PhysBody3D(body);
 	
-	// Create primitive
-	tuputamadre = new Cube(3, 1, 1);
+	// Add rigid to physbody
+	PhysBody3D* PhysBody = new PhysBody3D(body);
+	PhysBody->SetPos(pos.x, pos.y, pos.z);
 
-	// Link the PhysBody to the primitive
-	floor1xdpb = App->physics->AddBody(*tuputamadre, 0.0);	
+	// Create primitive
+	Cube* cube = new Cube(size.x, size.y, size.z);	
+	
+	cube->SetPos(pos.x, pos.y, pos.z);
+
+	CubeWallFloorList.add(cube);
 }

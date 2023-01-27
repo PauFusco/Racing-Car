@@ -10,16 +10,14 @@ public:
 	ModuleCircuit(Application * app, bool start_enabled = true);
 	virtual ~ModuleCircuit();
 
-	bool Init();
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
 
 public:
+	void CreateWallOrFloor(vec3 size, vec3 pos);
 	void LoadAllCircuitObjects();
 
-public:
-	PhysBody3D* floor1xdpb;
-	Cube* tuputamadre;
-
+	p2List<Cube*> CubeWallFloorList;
+	p2List_item<Cube*>* CubeListItem;
 };
