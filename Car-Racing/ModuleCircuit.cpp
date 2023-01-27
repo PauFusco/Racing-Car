@@ -45,7 +45,7 @@ update_status ModuleCircuit::Update(float dt)
 
 void ModuleCircuit::LoadAllCircuitObjects()
 {
-	CreateWallOrFloor(vec3(3, 1, 1), vec3(1, 1, 1));
+	CreateWallOrFloor(vec3(50, 1, 50), vec3(1, 1, 1));
 }
 
 // Position is the one of the center of mass (center of the cube)
