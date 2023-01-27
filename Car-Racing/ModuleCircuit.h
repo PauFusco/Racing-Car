@@ -15,8 +15,9 @@ public:
 	bool CleanUp();
 
 public:
+	void CreateWallOrFloor(vec3 size, vec3 pos);
+	void LoadAllCircuitObjects();
 
-	PhysBody3D* floor1xdb;
-	Primitive* tuputamadre;
-
+	p2List<Cube*> CubeWallFloorList;
+	p2List_item<Cube*>* CubeListItem;
 };
