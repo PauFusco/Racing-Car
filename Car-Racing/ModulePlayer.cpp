@@ -110,6 +110,44 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
+btVector3 ModulePlayer::CarPos()
+{
+	btVector3 aaa = vehicle->vehicle->getChassisWorldTransform().getOrigin();
+	return aaa;
+}
+
+vec2 ModulePlayer::CarRot()
+{
+	vec2 cPos;
+
+	//vehicle->vehicle->getChassisWorldTransform().getRotation().
+
+	btQuaternion q = vehicle->vehicle->getChassisWorldTransform().getRotation();
+
+	q.normalize();
+
+	double sinp = (1 + 2 * (q.getW() * q.getY() - q.getX() * q.getZ()));
+	double cosp = (1 - 2 * (q.getW() * q.getY() - q.getX() * q.getZ()));
+	sinp = sinp / cosp;
+	sinp = sqrt(sinp);
+	float rot = 2 * atan(sinp) - M_PI / 2;
+
+	//double sinp = 2 * (q.getW() * q.getZ() + q.getX() * q.getY());
+	//double cosp = 1 - 2 * (q.getY() * q.getY() + q.getZ() * q.getZ());
+	//sinp = sinp / cosp;
+	//float rot = atan(sinp);
+
+
+
+	cPos.x = cos(rot);
+	cPos.y = sin(rot);
+
+	//cPos.x = vehicle->vehicle->getWheelInfo(3).m_wheelDirectionCS.y();
+	//cPos.y = sin(vehicle->vehicle->getChassisWorldTransform().getRotation().getY());
+
+	return cPos;
+}
+
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
@@ -160,41 +198,43 @@ update_status ModulePlayer::Update(float dt)
 		if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
 		{
 			float Fb, Fd;
-
+		
 			float Vol;
 			Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
 			if ((25 - aaa.y() + 1) > 25)
 			{
 				Vol = (25 - aaa.y() - 1);
 			}
-
+		
 			float density;
-
+		
 			density = 10;
-
+		
 			Fb = (density * GRAVITY.y() * Vol) * 0.6;
-
+		
 			if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
 			{
 				Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
-
+		
 				vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
 			}
-
+		
 			
-
+		
 			
-
+		
 			LOG("the info is this: %f", vehicle->GetKmh());
-
+		
 			vehicle->Push(0, Fb, 0);
 		}
 	}
 
+	;
+
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "%.1f Km/h", vehicle->vehicle->getChassisWorldTransform().getRotation().getY());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

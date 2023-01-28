@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
+#include "ModulePlayer.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -56,8 +57,22 @@ update_status ModuleCamera3D::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
 
+	vec2 camPos;
+
+	camPos = App->player->CarRot();
+
+	Position.x = App->player->CarPos().x() + camPos.x * 50;
+	Position.y = App->player->CarPos().y() + 50;
+	Position.z = App->player->CarPos().z() + camPos.y * 50;
+
 	Position += newPos;
 	Reference += newPos;
+
+	newPos.x = App->player->CarPos().x();
+	newPos.y = App->player->CarPos().y();
+	newPos.z = App->player->CarPos().z();
+
+	LookAt(newPos);
 
 	// Mouse motion ----------------
 
