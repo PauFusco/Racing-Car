@@ -106,6 +106,9 @@ bool ModulePlayer::Start()
 	GravityX = originalGravity.x();
 	GravityY = originalGravity.y();
 	GravityZ = originalGravity.z();
+
+	vehiclerb = vehicle->vehicle->getRigidBody();
+
 	return true;
 }
 
@@ -242,7 +245,7 @@ update_status ModulePlayer::Update(float dt)
 	else
 		vehicle->info.frictionSlip = 20.0;
 
-	vehiclerb = vehicle->vehicle->getRigidBody();
+	
 	
 
 	
@@ -287,14 +290,17 @@ bool ModulePlayer::CheckDirt()
 
 void ModulePlayer::Debug()
 {
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 	{
 		vehicle->info.mass += 10;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 	{
 		vehicle->info.mass -= 10;
 	}
+
+	vehiclerb->setMassProps(vehicle->info.mass, vehiclerb->getLocalInertia());
+
 
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)

@@ -36,6 +36,8 @@ public:
 
 	vec4 Darea;
 
+	float massSetter;
+
 	float GravityX;
 	float GravityY;
 	float GravityZ;
