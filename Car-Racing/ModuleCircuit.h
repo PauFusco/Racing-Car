@@ -15,7 +15,7 @@ public:
 	bool CleanUp();
 
 public:
-	void CreateWallOrFloor(vec3 size, vec3 pos);
+	void CreateWallOrFloor(vec3 size, vec3 pos, float angle = 0.0, Color color = Color(1,1,1,1));
 	void LoadAllCircuitObjects();
 
 	p2List<Cube*> CubeWallFloorList;
