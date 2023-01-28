@@ -22,12 +22,13 @@ public:
 	btVector3 CarPos();
 	vec2 CarRot();
 
-	
+	bool CheckDirt();
 
 public:
-
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
+	vec4 Darea;
 };

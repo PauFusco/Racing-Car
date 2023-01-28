@@ -28,7 +28,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 20.0;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -99,6 +99,9 @@ bool ModulePlayer::Start()
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 2, 110);
 	//vehicle->SetTransform();
+
+	Darea = App->circuit->DirtArea;
+
 	return true;
 }
 
@@ -193,44 +196,49 @@ update_status ModulePlayer::Update(float dt)
 		btVector3 aaa = vehicle->vehicle->getChassisWorldTransform().getOrigin();
 
 
-		//LOG("the axis is this: %f", aaa.z());
+			//LOG("the axis is this: %f", aaa.z());
 
-		if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
-		{
-			float Fb, Fd;
+		//if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
+		//{
+		//	float Fb, Fd;
+		//
+		//	float Vol;
+		//	Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
+		//	if ((25 - aaa.y() + 1) > 25)
+		//	{
+		//		Vol = (25 - aaa.y() - 1);
+		//	}
+		//
+		//	float density;
+		//
+		//	density = 10;
+		//
+		//	Fb = (density * GRAVITY.y() * Vol) * 0.6;
+		//
+		//	if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
+		//	{
+		//		Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
+		//
+		//		vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
+		//	}
+		//
+		//
+		//
+		//
+		//
+		//	LOG("the info is this: %f", vehicle->GetKmh());
+		//
+		//	vehicle->Push(0, Fb, 0);
+		//}
 		
-			float Vol;
-			Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
-			if ((25 - aaa.y() + 1) > 25)
-			{
-				Vol = (25 - aaa.y() - 1);
-			}
-		
-			float density;
-		
-			density = 10;
-		
-			Fb = (density * GRAVITY.y() * Vol) * 0.6;
-		
-			if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
-			{
-				Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
-		
-				vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
-			}
-		
-			
-		
-			
-		
-			LOG("the info is this: %f", vehicle->GetKmh());
-		
-			vehicle->Push(0, Fb, 0);
-		}
 	}
 
-	;
+	if (CheckDirt())
+		vehicle->info.frictionSlip = 0.1;
+	else
+		vehicle->info.frictionSlip = 20.0;
 
+	
 	vehicle->Render();
 
 	char title[80];
@@ -240,5 +248,32 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
+bool ModulePlayer::CheckDirt()
+{
+	bool ret = false;
+	
+	vec3 VPos = vehicle->GetPos();
 
+	// x -> minx, y -> minz, z -> maxx, w -> maxz
+	float minX = Darea.x, minZ = Darea.y, maxX = Darea.z, maxZ = Darea.w;
+
+
+	if (minX < VPos.x)
+	{
+		if (VPos.x < maxX)
+		{
+			if (minZ < VPos.z)
+			{
+				if (VPos.z < maxZ)
+				{
+					ret = true;
+				}
+			}	
+		}
+	}
+
+	LOG("%d", ret);
+
+	return ret;
+}
 

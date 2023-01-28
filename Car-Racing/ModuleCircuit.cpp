@@ -3,7 +3,6 @@
 #include "ModuleCircuit.h"
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
-#include "PhysBody3D.h"
 #include "ModulePhysics3D.h"
 
 ModuleCircuit::ModuleCircuit(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -49,7 +48,7 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	Color Red(1.0, 0.0, 0.0);
 	Color Green(0.0, 1.0, 0.0);
 	Color Blue(0.0, 0.0, 1.0);
-	Color Water = Blue;	Water.a = 0.5;
+	Color Water = Blue;	Water.a = 0.1;
 
 	Color Dirt(0.4, 0.2, 0.0);
 
@@ -63,48 +62,51 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	CreateWallOrFloor(vec3(20, 1, 30), vec3(-70, 0, -40));
 	
 	// Dirt Part
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(-90, -0.25, -50), -45, Dirt);
-	CreateWallOrFloor(vec3(30, 1, 90), vec3(-100, -0.25, -105), 0, Dirt);
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(-90, -0.25, -50), -45, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(30, 1, 90), vec3(-100, -0.25, -105), 0, Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(65, 1, 20), vec3(-82.5, -0.25, -160), 0, Dirt);
+	CreateWallOrFloor(vec3(65, 1, 20), vec3(-82.5, -0.25, -160), 0, Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(-60, -0.25, -120), 0, Dirt);
+	CreateWallOrFloor(vec3(20, 1, 60), vec3(-60, -0.25, -120), 0, Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(-40, -0.25, -80), 0, Dirt);
+	CreateWallOrFloor(vec3(60, 1, 20), vec3(-40, -0.25, -80), 0, Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(-20, -0.25, -120), 0, Dirt);
-	
-	// ---------------------------------------------------------------- //
-
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(0, -0.25, -160), 0, Dirt);
+	CreateWallOrFloor(vec3(20, 1, 60), vec3(-20, -0.25, -120), 0, Dirt, ColType::DIRT);
 	
 	// ---------------------------------------------------------------- //
 
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(20, -0.25, -120), 0, Dirt);
+	CreateWallOrFloor(vec3(60, 1, 20), vec3(0, -0.25, -160), 0, Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(40, -0.25, -80), 0, Dirt);
+	// ---------------------------------------------------------------- //
+
+	CreateWallOrFloor(vec3(20, 1, 60), vec3(20, -0.25, -120), 0, Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(60, -0.25, -120), 0, Dirt);
+	CreateWallOrFloor(vec3(60, 1, 20), vec3(40, -0.25, -80), 0, Dirt, ColType::DIRT);
+	
+	CreateWallOrFloor(vec3(20, 1, 60), vec3(60, -0.25, -120), 0, Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(65, 1, 20), vec3(82.5, -0.25, -160), 0, Dirt);
+	CreateWallOrFloor(vec3(65, 1, 20), vec3(82.5, -0.25, -160), 0, Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(30, 1, 90), vec3(100, -0.25, -105), 0, Dirt);
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(90, -0.25, -50), 45, Dirt);
+	CreateWallOrFloor(vec3(30, 1, 90), vec3(100, -0.25, -105), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(90, -0.25, -50), 45, Dirt, ColType::DIRT);
 
 	// Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(50, 0, -30), 45);
 	CreateWallOrFloor(vec3(20, 1, 30), vec3(70, 0, -40));
 	
 	// Water ?
-	CreateWallOrFloor(vec3(30, 1, 110), vec3(40, 0, 35));
+	CreateWallOrFloor(vec3(30, 1, 110), vec3(40, 0, 35), 0, Water, ColType::WATER);
 	
+	// x -> minx, y -> minz, z -> maxx, w -> maxz
+	DirtArea = vec4(40 - 30 / 2, 35 - 110 / 2, 40 + 30 / 2, 35 + 110 / 2);
+
 	//Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(30, 0, 100), 45);
 
 }
 
 // Position is the one of the center of mass (center of the cube)
-void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color color)
+void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color color, ColType type)
 {
 	// Create rigid body
 	btBoxShape* floorshape = new btBoxShape(btVector3(size.x / 2, size.y / 2, size.z / 2));
@@ -112,7 +114,15 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState();
 
+	btCollisionObject* collider = new btCollisionObject();
+
 	btRigidBody* body = new btRigidBody(0, myMotionState, colShape);
+
+
+	if (type == ColType::DIRT) {
+		body->setFriction(.4);
+	}
+	else body->setFriction(0.0);
 
 	// Add the rigid to the world
 	App->physics->world->addRigidBody(body);
@@ -120,7 +130,8 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 	// Add rigid to PhysBody
 	PhysBody3D* PhysBody = new PhysBody3D(body);
 	PhysBody->SetPos(pos.x, pos.y, pos.z);
-	
+	PhysBody->colType = type;
+
 	// Create primitive
 	Cube* cube = new Cube(size.x, size.y, size.z);	
 	
