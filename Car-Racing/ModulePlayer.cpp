@@ -101,7 +101,11 @@ bool ModulePlayer::Start()
 	//vehicle->SetTransform();
 
 	Darea = App->circuit->DirtArea;
+	btVector3 originalGravity = App->physics->world->getGravity();
 
+	GravityX = originalGravity.x();
+	GravityY = originalGravity.y();
+	GravityZ = originalGravity.z();
 	return true;
 }
 
@@ -175,7 +179,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		acceleration = -MAX_ACCELERATION;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -238,6 +242,12 @@ update_status ModulePlayer::Update(float dt)
 	else
 		vehicle->info.frictionSlip = 20.0;
 
+	vehiclerb = vehicle->vehicle->getRigidBody();
+	
+
+	
+	Debug();
+	
 	
 	vehicle->Render();
 
@@ -272,8 +282,47 @@ bool ModulePlayer::CheckDirt()
 		}
 	}
 
-	LOG("%d", ret);
-
 	return ret;
 }
 
+void ModulePlayer::Debug()
+{
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_REPEAT)
+	{
+		vehicle->info.mass += 10;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT)
+	{
+		vehicle->info.mass -= 10;
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		GravityX += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		GravityX -= 0.5;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		GravityY += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		GravityY -= 0.5;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		GravityZ += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		GravityZ -= 0.5;
+	}
+
+	App->physics->world->setGravity(btVector3(GravityX, GravityY, GravityZ));
+}

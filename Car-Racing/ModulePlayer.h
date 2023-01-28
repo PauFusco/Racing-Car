@@ -24,11 +24,19 @@ public:
 
 	bool CheckDirt();
 
+	void Debug();
+
 public:
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
 
+	btRigidBody* vehiclerb;
+
 	vec4 Darea;
+
+	float GravityX;
+	float GravityY;
+	float GravityZ;
 };

@@ -102,7 +102,6 @@ void ModuleCircuit::LoadAllCircuitObjects()
 
 	//Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(30, 0, 100), 45);
-
 }
 
 // Position is the one of the center of mass (center of the cube)
