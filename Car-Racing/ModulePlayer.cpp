@@ -141,6 +141,56 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
+		vehicle->Push(0, 200, 0);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
+	{
+		vehicle->Push(10, 100, 0);
+	}
+
+	//if (App->input->GetKey(SDL_SCANCODE_V) == KEY_REPEAT)
+	{
+		btVector3 aaa = vehicle->vehicle->getChassisWorldTransform().getOrigin();
+
+
+		//LOG("the axis is this: %f", aaa.z());
+
+		if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
+		{
+			float Fb, Fd;
+
+			float Vol;
+			Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
+			if ((25 - aaa.y() + 1) > 25)
+			{
+				Vol = (25 - aaa.y() - 1);
+			}
+
+			float density;
+
+			density = 10;
+
+			Fb = (density * GRAVITY.y() * Vol) * 0.6;
+
+			if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
+			{
+				Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
+
+				vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
+			}
+
+			
+
+			
+
+			LOG("the info is this: %f", vehicle->GetKmh());
+
+			vehicle->Push(0, Fb, 0);
+		}
+	}
+
 	vehicle->Render();
 
 	char title[80];

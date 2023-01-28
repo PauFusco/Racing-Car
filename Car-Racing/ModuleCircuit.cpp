@@ -45,6 +45,7 @@ update_status ModuleCircuit::Update(float dt)
 
 void ModuleCircuit::LoadAllCircuitObjects()
 {
+
 	Color Red(1.0, 0.0, 0.0);
 	Color Green(0.0, 1.0, 0.0);
 	Color Blue(0.0, 0.0, 1.0);
@@ -99,6 +100,7 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	
 	//Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(30, 0, 100), 45);
+
 }
 
 // Position is the one of the center of mass (center of the cube)
