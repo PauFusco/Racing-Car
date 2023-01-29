@@ -17,7 +17,7 @@ Running on dirt and water will be difficult, so be careful!! (Friction there is 
 
 [GitHub](https://github.com/PauFusco/Racing-Car)
 
-Credits:
+## Credits
 - Hector Garcia: Art & Programming
 - Sergio Garriguez: Programming
 - Kaede Sato: Art
