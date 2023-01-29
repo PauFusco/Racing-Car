@@ -150,3 +150,59 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
+
+void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orientationY) {
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glBegin(GL_QUADS);
+	if (orientationY == true) {
+		glTexCoord2f(0, 0); glVertex3f(pos.x, pos.y, pos.z);
+		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y + size, pos.z);
+		glTexCoord2f(1, 1); glVertex3f(pos.x + size, pos.y + size, pos.z);
+		glTexCoord2f(1, 0); glVertex3f(pos.x + size, pos.y, pos.z);
+	}
+	else {
+		pos.x -= 37.5;
+		pos.y += 0;
+		pos.z -= 37.5;
+		glTexCoord2f(0, 0); glVertex3f(pos.x, pos.y, pos.z);
+		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y, pos.z + size);
+		glTexCoord2f(1, 1); glVertex3f(pos.x + size, pos.y, pos.z + size);
+		glTexCoord2f(1, 0); glVertex3f(pos.x + size, pos.y, pos.z);
+	}
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+
+}
+uint ModuleRenderer3D::LoadTexture(const char* path) {
+	LOG("Loading texture");
+	SDL_Surface* surface = IMG_Load(path);
+
+	if (surface == NULL)
+	{
+		LOG("error loading image %s", IMG_GetError());
+		return 0;
+	}
+
+	Uint32 texture = NULL;
+
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+	int ret = glGetError();
+	if (ret != GL_NO_ERROR)
+	{
+		LOG("GL Error in loadTexture: %i", ret);
+	}
+
+	SDL_FreeSurface(surface);
+	return texture;
+}

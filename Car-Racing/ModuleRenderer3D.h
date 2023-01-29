@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "glut/glut.h"
+#include "SDL_image/include/SDL_image.h"
 
 #define MAX_LIGHTS 8
 
@@ -18,6 +20,9 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+
+	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY);
+	uint LoadTexture(const char* path);
 
 public:
 
