@@ -39,6 +39,15 @@ bool ModuleSceneIntro::Start()
 	Ina = App->renderer3D->LoadTexture("Wahssets/Images/Ina.jpg");
 	KawaiiKoto = App->renderer3D->LoadTexture("Wahssets/Images/Kawaii.jpg");
 
+	//sexPau = App->renderer3D->LoadTexture("Wahssets/Images/Sex.jpg");
+	//Wahmuel = App->renderer3D->LoadTexture("Wahssets/Images/Wahmuel.jpg");
+	//Goomba = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
+	//Rose = App->renderer3D->LoadTexture("Wahssets/Images/Rose.jpg");
+	//Wairim = App->renderer3D->LoadTexture("Wahssets/Images/Wairim.jpg");
+	//Wabeni = App->renderer3D->LoadTexture("Wahssets/Images/Wabeni.jpg");
+	//Wakima = App->renderer3D->LoadTexture("Wahssets/Images/wakima.jpg");
+	//Bimu = App->renderer3D->LoadTexture("Wahssets/Images/Bimu.jpg");
+
 	
 	level_start = Clock::now();
 
@@ -115,6 +124,25 @@ update_status ModuleSceneIntro::Update(float dt)
 	App->renderer3D->DrawTexture(Wantia, vec3(-85, 17, -150), 15, TextureOrientation::Y);
 	App->renderer3D->DrawTexture(Ina, vec3(-70, 17, -70), 55, TextureOrientation::Y);
 	App->renderer3D->DrawTexture(KawaiiKoto, vec3(10, 17, -70), 55, TextureOrientation::Y);
+
+
+	//app->renderer3d->drawtexture(waluigi, vec3(13, 20, 83), 50, textureorientation::z);
+	//app->renderer3d->drawtexture(waluigilogo, vec3(13, 20, -32), 50, textureorientation::z);
+
+	//app->renderer3d->drawtexture(sexpau, vec3(25, 17, 89.5), 30, textureorientation::y);
+	//app->renderer3d->drawtexture(wahmuel, vec3(25, 15, -20.5), 30, textureorientation::y);
+
+
+	//app->renderer3d->drawtexture(goomba, vec3(-500, 0, -500), 1000, textureorientation::z);
+	//app->renderer3d->drawtexture(rose, vec3(-10, 17, -150), 20, textureorientation::y);
+	//app->renderer3d->drawtexture(wakima, vec3(70, 17, -150), 15, textureorientation::y);
+	//app->renderer3d->drawtexture(wabeni, vec3(-85, 17, -150), 15, textureorientation::y);
+	//app->renderer3d->drawtexture(bimu, vec3(-70, 17, -70), 55, textureorientation::y);
+	//app->renderer3d->drawtexture(wairim, vec3(10, 17, -70), 55, textureorientation::y);
+
+
+
+
 
 
 	return UPDATE_CONTINUE;
