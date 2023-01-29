@@ -20,7 +20,10 @@ public:
 						   Color color = Color(1, 1, 1, 1),
 						   ColType type = ColType::UNKNOWN);
 	
+	void CreateAllFloors();
 	void CreateAllBarriers();
+
+	void CreateDoor();
 
 	void LoadAllCircuitObjects();
 
@@ -29,4 +32,13 @@ public:
 
 	vec4 DirtArea;
 	vec4 WaterArea;
+
+	PhysBody3D* PhysBodyA;
+	PhysBody3D* PhysBodyB;
+
+	Cube* cubeA;
+	Cube* cubeB;
+
+	vec3 posA;
+	vec3 posB;
 };
