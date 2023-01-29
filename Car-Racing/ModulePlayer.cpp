@@ -5,6 +5,11 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+#include <chrono>
+using namespace std;
+using namespace chrono;
+typedef high_resolution_clock Clock;
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -28,7 +33,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 20.0;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -97,8 +102,21 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 2, 110);
+
+	startPos = vec3(0, 22, 110);
+
+	vehicle->SetPos(startPos.x, startPos.y, startPos.z);
 	//vehicle->SetTransform();
+
+	Warea = App->circuit->WaterArea;
+	btVector3 originalGravity = App->physics->world->getGravity();
+
+	GravityX = originalGravity.x();
+	GravityY = originalGravity.y();
+	GravityZ = originalGravity.z();
+
+	vehiclerb = vehicle->vehicle->getRigidBody();
+
 	return true;
 }
 
@@ -151,28 +169,97 @@ vec2 ModulePlayer::CarRot()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	Movement();
+
+	
+
+	if (vehicle->GetPos().y <= 10)
+	{
+		Reset();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		vehicle->SetPos(0.0, 20.25, -160);
+	}
+
+	if (vehicle->GetPos().z < -150)
+	{
+		if (0.1 > vehicle->GetPos().x > -0.1)
+		{
+			CheckPoint = true;
+		}
+	}
+
+	if (CheckPoint)
+	{
+		if (vehicle->GetPos().z > 95)
+		{
+			if (0.1 > vehicle->GetPos().x > -0.1)
+			{
+				Win = true;
+			}
+		}
+	}
+
+	if (vehicle->GetPos().z < -80) {
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 2.0;
+	}
+	else {
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 20.0;
+	}
+
+	if (CheckWater())
+	{
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 1.0;
+
+		if (vehicle->GetKmh() < 10)
+		{
+			BouMov();
+		}
+	}
+	
+	
+	Debug();
+	
+	vehicle->Render();
+
+	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::Movement()
+{
 	turn = acceleration = brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
+		if (turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		acceleration = -MAX_ACCELERATION;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -187,7 +274,64 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->Push(10, 100, 0);
 	}
+}
 
+bool ModulePlayer::CheckDirt()
+{
+	bool ret = false;
+	
+	vec3 VPos = vehicle->GetPos();
+
+	// x -> minx, y -> minz, z -> maxx, w -> maxz
+	float minX = Darea.x, minZ = Darea.y, maxX = Darea.z, maxZ = Darea.w;
+
+
+	if (minX < VPos.x)
+	{
+		if (VPos.x < maxX)
+		{
+			if (minZ < VPos.z)
+			{
+				if (VPos.z < maxZ)
+				{
+					ret = true;
+				}
+			}	
+		}
+	}
+
+	return ret;
+}
+
+bool ModulePlayer::CheckWater()
+{
+	bool ret = false;
+
+	vec3 VPos = vehicle->GetPos();
+
+	// x -> minx, y -> minz, z -> maxx, w -> maxz
+	float minX = Warea.x, minZ = Warea.y, maxX = Warea.z, maxZ = Warea.w;
+
+
+	if (minX < VPos.x)
+	{
+		if (VPos.x < maxX)
+		{
+			if (minZ < VPos.z)
+			{
+				if (VPos.z < maxZ)
+				{
+					ret = true;
+				}
+			}
+		}
+	}
+
+	return ret;
+}
+
+void ModulePlayer::BouMov()
+{
 	//if (App->input->GetKey(SDL_SCANCODE_V) == KEY_REPEAT)
 	{
 		btVector3 aaa = vehicle->vehicle->getChassisWorldTransform().getOrigin();
@@ -198,47 +342,99 @@ update_status ModulePlayer::Update(float dt)
 		if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
 		{
 			float Fb, Fd;
-		
+
 			float Vol;
 			Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
 			if ((25 - aaa.y() + 1) > 25)
 			{
 				Vol = (25 - aaa.y() - 1);
 			}
-		
+
 			float density;
-		
+
 			density = 10;
-		
+
 			Fb = (density * GRAVITY.y() * Vol) * 0.6;
-		
+
 			if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
 			{
 				Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
-		
+
 				vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
 			}
-		
-			
-		
-			
-		
-			LOG("the info is this: %f", vehicle->GetKmh());
-		
+
 			vehicle->Push(0, Fb, 0);
 		}
+
 	}
-
-	;
-
-	vehicle->Render();
-
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->vehicle->getChassisWorldTransform().getRotation().getY());
-	App->window->SetTitle(title);
-
-	return UPDATE_CONTINUE;
 }
 
+void ModulePlayer::Debug()
+{
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		vehicle->info.mass += 10;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+	{
+		vehicle->info.mass -= 10;
+	}
+
+	vehiclerb->setMassProps(vehicle->info.mass, vehiclerb->getLocalInertia());
 
 
+	
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		GravityX += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		GravityX -= 0.5;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		GravityY += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		GravityY -= 0.5;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		GravityZ += 0.5;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		GravityZ -= 0.5;
+	}
+
+	App->physics->world->setGravity(btVector3(GravityX, GravityY, GravityZ));
+
+
+	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT)
+	{
+		vehicle->setGrav({ 0,0,0 });
+	}
+	else
+	{
+		vehicle->setGrav({ GravityX, GravityY, GravityZ });
+	}
+}
+
+void ModulePlayer::SetVehiclePos(vec3 pos)
+{
+	vehicle->SetPos(pos.x, pos.y, pos.z);
+}
+
+void ModulePlayer::Reset()
+{
+	vehicle->SetAngularVelocity(0, 0, 0);
+	SetVehiclePos(startPos);
+
+	CheckPoint = false, Win = false;
+
+	App->scene_intro->level_start = Clock::now();
+}

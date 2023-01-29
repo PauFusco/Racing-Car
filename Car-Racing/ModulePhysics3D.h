@@ -37,9 +37,9 @@ public:
 
 	btDiscreteDynamicsWorld* world;
 
-private:
+	bool debug = false;
 
-	bool debug;
+private:
 
 	btDefaultCollisionConfiguration*	collision_conf;
 	btCollisionDispatcher*				dispatcher;

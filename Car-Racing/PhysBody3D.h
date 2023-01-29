@@ -2,9 +2,18 @@
 #define __PhysBody3D_H__
 
 #include "p2List.h"
+#include "glmath.h"
 
 class btRigidBody;
 class Module;
+
+enum class ColType
+{
+	PLAYER,
+	DIRT,
+	WATER,
+	UNKNOWN
+};
 
 // =================================================
 struct PhysBody3D
@@ -19,11 +28,19 @@ public:
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
 
+	void SetAngularVelocity(float x, float y, float z);
+
+	void setGrav(vec3 g);
+
+	vec3 GetPos();
+
 private:
 	btRigidBody* body = nullptr;
 
 public:
 	p2List<Module*> collision_listeners;
+
+	ColType colType;
 };
 
 #endif // __PhysBody3D_H__

@@ -36,6 +36,8 @@ struct VehicleInfo
 
 	Wheel* wheels;
 	int num_wheels;
+
+
 };
 
 
@@ -50,6 +52,7 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
+
 public:
 
 	VehicleInfo info;

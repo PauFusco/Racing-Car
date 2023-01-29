@@ -4,6 +4,11 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include <chrono>
+using namespace std;
+using namespace chrono;
+typedef high_resolution_clock Clock;
+
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -30,6 +35,11 @@ public:
 	Sphere s_snake2[MAX_SNAKE];
 	*/
 
+	uint texRandom;
+	uint texRandom2;
+	uint texRandom3;
+	uint texRandom4;
+
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
@@ -41,4 +51,16 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
+
+	Plane plane;
+
+	steady_clock::time_point level_start;
+	steady_clock::time_point level_now;
+
+	long long level_time;
+	long long max_time = 60;
+
+	bool bope = false;
+
+	char title[120];
 };
