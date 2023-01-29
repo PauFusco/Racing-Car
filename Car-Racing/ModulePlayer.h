@@ -25,6 +25,9 @@ public:
 	void Movement();
 
 	bool CheckDirt();
+	bool CheckWater();
+
+	void BouMov();
 
 	void Debug();
 
@@ -40,6 +43,7 @@ public:
 	btRigidBody* vehiclerb;
 
 	vec4 Darea;
+	vec4 Warea;
 
 	float massSetter;
 

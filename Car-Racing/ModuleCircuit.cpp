@@ -44,16 +44,15 @@ update_status ModuleCircuit::Update(float dt)
 
 void ModuleCircuit::LoadAllCircuitObjects()
 {
-
+	// Colors
 	Color Red(1.0, 0.0, 0.0);
 	Color Green(0.0, 1.0, 0.0);
 	Color Blue(0.0, 0.0, 1.0);
-	Color Water = Blue;	Water.a = 0.1;
-
+	Color Water = Blue;
 	Color Dirt(0.4, 0.2, 0.0);
 
 	// Start
-	CreateWallOrFloor(vec3(40, 1, 30), vec3(0, 0, 110));
+	CreateWallOrFloor(vec3(40,   1, 30),   vec3(   0,    0,     110));
 	
 	// Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3( -30,    0,     100), -45);
@@ -98,7 +97,7 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	CreateWallOrFloor(vec3(30,   1, 110),  vec3(  40,    0,      35),   0, Water, ColType::WATER);
 	
 	// x -> minx, y -> minz, z -> maxx, w -> maxz
-	DirtArea = vec4(40 - 30 / 2, 35 - 110 / 2, 40 + 30 / 2, 35 + 110 / 2);
+	WaterArea = vec4(40 - 30 / 2, 35 - 110 / 2, 40 + 30 / 2, 35 + 110 / 2);
 
 	// Normal
 	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(  30,    0,     100),  45);
@@ -132,10 +131,10 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 
 	if (type == ColType::DIRT)
 	{
-		body->setFriction(btScalar(0.00001));
+		body->setFriction(btScalar(0.00001f));
 	}
 	else
-		body->setFriction(btScalar(10.0));
+		body->setFriction(btScalar(10.0f));
 	
 	// Add the rigid to the world
 	App->physics->world->addRigidBody(body);
