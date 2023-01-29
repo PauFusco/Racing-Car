@@ -53,7 +53,7 @@ public:
 	steady_clock::time_point level_now;
 
 	long long level_time;
-	long long max_time = 50;
+	long long max_time = 60;
 
 	bool bope = false;
 

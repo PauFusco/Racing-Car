@@ -217,11 +217,17 @@ update_status ModulePlayer::Update(float dt)
 
 	if (CheckWater())
 	{
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 1.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 1.0;
+
 		if (vehicle->GetKmh() < 10)
 		{
 			BouMov();
 		}
 	}
+	
 	
 	Debug();
 	
@@ -333,7 +339,7 @@ void ModulePlayer::BouMov()
 
 		//LOG("the axis is this: %f", aaa.z());
 
-	//if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
+	if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
 		{
 			float Fb, Fd;
 		
@@ -377,7 +383,7 @@ void ModulePlayer::Debug()
 	vehiclerb->setMassProps(vehicle->info.mass, vehiclerb->getLocalInertia());
 
 
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		GravityX += 0.5;
