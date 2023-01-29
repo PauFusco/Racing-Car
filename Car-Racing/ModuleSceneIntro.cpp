@@ -27,10 +27,12 @@ bool ModuleSceneIntro::Start()
 	//App->audio->PlayMusic("Wahssets/Audio/Waluigi_theme_eurobeat.wav");
 
 	//texRandom = App->renderer3D->LoadTexture("Wahssets/Images/gurrra.jpg");
-	texRandom = App->renderer3D->LoadTexture("Wahssets/Images/sex2.jpg");
-	texRandom2 = App->renderer3D->LoadTexture("Wahssets/Images/Wah.jpg");
-	texRandom4 = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
-	texRandom3 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
+	
+	Waluigi = App->renderer3D->LoadTexture("Wahssets/Images/sex2.jpg");
+	WaluigiLogo = App->renderer3D->LoadTexture("Wahssets/Images/wahlogo.jpg");
+	WaterDoor1 = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
+	WaterDoor2 = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
+	Background = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	//texRandom5 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	
 	level_start = Clock::now();
@@ -76,15 +78,22 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	//App->renderer3D->DrawTexture(texRandom, vec3(0, 20.6, 120), 100, TextureOrientation::Z);
 
-	App->renderer3D->DrawTexture(texRandom, vec3(13, 20, 83), 50, TextureOrientation::Z);
-	App->renderer3D->DrawTexture(texRandom2, vec3(25, 17, 89.5), 30, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(texRandom4, vec3(25, 15, -20.5), 30, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(texRandom3, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(Waluigi, vec3(13, 20, 83), 50, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(WaluigiLogo, vec3(13, 20, -32), 50, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(WaterDoor1, vec3(25, 17, 89.5), 30, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(WaterDoor2, vec3(25, 15, -20.5), 30, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Background, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(Background, vec3(-10, 17, -150), 20, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Background, vec3(70, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Background, vec3(-85, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Background, vec3(-70, 17, -70), 55, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Background, vec3(10, 17, -70), 55, TextureOrientation::Y);
+
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
-{
+{ 
 }
 

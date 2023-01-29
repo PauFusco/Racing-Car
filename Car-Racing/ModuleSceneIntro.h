@@ -35,10 +35,13 @@ public:
 	Sphere s_snake2[MAX_SNAKE];
 	*/
 
-	uint texRandom;
-	uint texRandom2;
-	uint texRandom3;
-	uint texRandom4;
+	uint Waluigi;
+	uint WaluigiLogo;
+	uint WaterDoor1;
+	uint Background;
+	uint WaterDoor2;
+	uint DirtTurnMiddle;
+	uint DirtTurnBack;
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
