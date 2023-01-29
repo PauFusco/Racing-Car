@@ -16,3 +16,10 @@ Running on dirt and water will be difficult, so be careful!! (Friction there is 
 - M & N -> decrease, increase gravity Z
 
 [GitHub](https://github.com/PauFusco/Racing-Car)
+
+Credits:
+- Hector Garcia: Art & Programming
+- Sergio Garriguez: Programming
+- Kaede Sato: Art
+- Dani Garcia: Art & Programming
+- Pau Fusco: Programming
