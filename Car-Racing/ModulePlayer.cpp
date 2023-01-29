@@ -217,7 +217,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (CheckWater())
 	{
-		if (vehicle->GetKmh() < 100)
+		if (vehicle->GetKmh() < 10)
 		{
 			BouMov();
 		}

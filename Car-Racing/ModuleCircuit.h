@@ -19,6 +19,8 @@ public:
 	void CreateWallOrFloor(vec3 size, vec3 pos, float angle = 0.0,
 						   Color color = Color(1, 1, 1, 1),
 						   ColType type = ColType::UNKNOWN);
+	
+	void CreateAllBarriers();
 
 	void LoadAllCircuitObjects();
 

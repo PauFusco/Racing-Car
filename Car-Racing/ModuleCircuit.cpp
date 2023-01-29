@@ -112,6 +112,82 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    7.5,   125));
 	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    7.5,    95));
 	CreateWallOrFloor(vec3(0.1,  5, 30),   vec3(   0,   12.5,   110));
+
+	CreateAllBarriers();
+}
+
+void ModuleCircuit::CreateAllBarriers()
+{
+	CreateWallOrFloor(vec3(40, 1, 1), vec3(0, 1, 125));
+	CreateWallOrFloor(vec3(40, 1, 1), vec3(0, 1, 95));
+	
+	CreateWallOrFloor(vec3(50, 1, 1), vec3(-37.5, 1, 108), -45);
+	CreateWallOrFloor(vec3( 7, 1, 1), vec3(-22.5, 1, 92.5), -45);
+
+	CreateWallOrFloor(vec3(110, 1, 1), vec3(-55, 1, 35), 90);
+	CreateWallOrFloor(vec3(110, 1, 1), vec3(-25, 1, 35), 90);
+
+	CreateWallOrFloor(vec3(50, 1, 1), vec3(-42.5, 1, -38), -45);
+	CreateWallOrFloor(vec3(7, 1, 1), vec3(-57.5, 1, -22), -45);
+
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(-70, 1, -25));
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(-70, 1, -55));
+
+	//
+	//
+	
+	CreateWallOrFloor(vec3(107.5, 1, 1), vec3(-115, 0.75, -115), 90);
+	CreateWallOrFloor(vec3(90, 1, 1), vec3(-85, 0.75, -105), 90);
+
+	CreateWallOrFloor(vec3(15, 1, 1), vec3(-77.5, 0.75, -150));
+	CreateWallOrFloor(vec3(65, 1, 1), vec3(-82.5, 0.75, -170));
+
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(-50, 0.75, -130), 90);
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(-70, 0.75, -110), 90);
+
+	CreateWallOrFloor(vec3(60, 1, 1), vec3(-40, 0.75, -70));
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(-40, 0.75, -90));
+
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(-30, 0.75, -130), 90);
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(-10, 0.75, -110), 90);
+
+
+
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(0, 0.75, -150));
+	CreateWallOrFloor(vec3(60, 1, 1), vec3(0, 0.75, -170));
+
+
+
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(30, 0.75, -130), 90);
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(10, 0.75, -110), 90);
+
+	CreateWallOrFloor(vec3(60, 1, 1), vec3(40, 0.75, -70));
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(40, 0.75, -90));
+
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(50, 0.75, -130), 90);
+	CreateWallOrFloor(vec3(80, 1, 1), vec3(70, 0.75, -110), 90);
+
+	CreateWallOrFloor(vec3(15, 1, 1), vec3(77.5, 0.75, -150));
+	CreateWallOrFloor(vec3(65, 1, 1), vec3(82.5, 0.75, -170));
+
+	CreateWallOrFloor(vec3(107.5, 1, 1), vec3(115, 0.75, -115), 90);
+	CreateWallOrFloor(vec3(90, 1, 1), vec3(85, 0.75, -105), 90);
+
+	//
+	//
+
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(70, 1, -25));
+	CreateWallOrFloor(vec3(20, 1, 1), vec3(70, 1, -55));
+
+	CreateWallOrFloor(vec3(50, 1, 1), vec3(42.5, 1, -38),45);
+	CreateWallOrFloor(vec3(7, 1, 1), vec3(57.5, 1, -22), 45);
+
+	CreateWallOrFloor(vec3(110, 1, 1), vec3(55, 1, 35), 90);
+	CreateWallOrFloor(vec3(110, 1, 1), vec3(25, 1, 35), 90);
+
+	CreateWallOrFloor(vec3(50, 1, 1), vec3(37.5, 1, 108), 45);
+	CreateWallOrFloor(vec3(7, 1, 1), vec3(22.5, 1, 92.5), 45);
+
 }
 
 // Position is the one of the center of mass (center of the cube)
@@ -129,12 +205,6 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 
 	btRigidBody* body = new btRigidBody(0, myMotionState, colShape);
 
-	if (type == ColType::DIRT)
-	{
-		body->setFriction(btScalar(0.00001f));
-	}
-	else
-		body->setFriction(btScalar(10.0f));
 	
 	// Add the rigid to the world
 	App->physics->world->addRigidBody(body);
@@ -148,7 +218,7 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 	Cube* cube = new Cube(size.x, size.y, size.z);	
 	
 	cube->SetPos(pos.x, pos.y, pos.z);
-	cube->SetRotation(angle, vec3(0,1,0));
+	cube->SetRotation(angle, vec3(0, 1, 0));
 	
 	// PhysBody Rotation
 	PhysBody->SetTransform(cube->transform.M);
@@ -157,3 +227,4 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 
 	CubeWallFloorList.add(cube);
 }
+
