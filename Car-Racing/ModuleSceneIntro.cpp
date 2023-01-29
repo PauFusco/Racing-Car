@@ -32,7 +32,7 @@ bool ModuleSceneIntro::Start()
 	WaluigiLogo = App->renderer3D->LoadTexture("Wahssets/Images/wahlogo.jpg");
 	WaterDoor1 = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
 	WaterDoor2 = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
-	Background = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
+	//Background = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	//texRandom5 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	
 	level_start = Clock::now();
