@@ -47,7 +47,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	level_time = duration_cast<seconds>(level_now - level_start).count();
 
 	if (!App->player->Win) {
-		sprintf_s(title, "If you fall a portal will teleport you to the start, don't worry! You have %d seconds left!", int(max_time - level_time));
+		sprintf_s(title, "If you fall a portal will teleport you to the start, don't worry! You have %d seconds left! (Beware the allmighty dirt)", int(max_time - level_time));
 		App->window->SetTitle(title);
 	}
 	else

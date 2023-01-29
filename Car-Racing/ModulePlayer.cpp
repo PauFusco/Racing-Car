@@ -33,7 +33,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 5.0;
+	car.frictionSlip = 20.0;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -202,10 +202,18 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	if (CheckDirt())
-		vehicle->info.frictionSlip = 0.1;
-	else
-		vehicle->info.frictionSlip = 20.0;
+	if (vehicle->GetPos().z < -100) {
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 3.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 3.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 3.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 3.0;
+	}
+	else {
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 20.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 20.0;
+	}
 
 	if (CheckWater())
 	{
