@@ -4,6 +4,11 @@
 #include "Globals.h"
 #include "Primitive.h"
 
+#include <chrono>
+using namespace std;
+using namespace chrono;
+typedef high_resolution_clock Clock;
+
 #define MAX_SNAKE 2
 
 struct PhysBody3D;
@@ -42,5 +47,9 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	bool run = true;
+	steady_clock::time_point level_start;
+	steady_clock::time_point level_now;
+
+	long long level_time;
+	long long max_time = 60;
 };

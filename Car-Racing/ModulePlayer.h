@@ -26,6 +26,8 @@ public:
 
 	void Debug();
 
+	void SetVehiclePos(vec3 pos);
+
 public:
 	PhysVehicle3D* vehicle;
 	float turn;
@@ -41,4 +43,6 @@ public:
 	float GravityX;
 	float GravityY;
 	float GravityZ;
+
+	vec3 startPos;
 };

@@ -97,7 +97,10 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 2, 110);
+
+	startPos = vec3(0, 2, 110);
+
+	vehicle->SetPos(startPos.x, startPos.y, startPos.z);
 	//vehicle->SetTransform();
 
 	Darea = App->circuit->DirtArea;
@@ -331,4 +334,9 @@ void ModulePlayer::Debug()
 	}
 
 	App->physics->world->setGravity(btVector3(GravityX, GravityY, GravityZ));
+}
+
+void ModulePlayer::SetVehiclePos(vec3 pos)
+{
+	vehicle->SetPos(pos.x, pos.y, pos.z);
 }
