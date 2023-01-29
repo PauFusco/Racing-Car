@@ -30,10 +30,15 @@ bool ModuleSceneIntro::Start()
 
 	Waluigi = App->renderer3D->LoadTexture("Wahssets/Images/sex2.jpg");
 	WaluigiLogo = App->renderer3D->LoadTexture("Wahssets/Images/wahlogo.jpg");
-	WaterDoor1 = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
-	WaterDoor2 = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
-	//Background = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
-	//texRandom5 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
+	Gura = App->renderer3D->LoadTexture("Wahssets/Images/Wah.jpg");
+	Orcat = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
+	Makima = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
+	Wantia = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
+	Wantbro1 = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
+	Wantbro2 = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
+	Ina = App->renderer3D->LoadTexture("Wahssets/Images/Ina.jpg");
+	KawaiiKoto = App->renderer3D->LoadTexture("Wahssets/Images/Kawaii.jpg");
+
 	
 	level_start = Clock::now();
 
@@ -99,14 +104,17 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	App->renderer3D->DrawTexture(Waluigi, vec3(13, 20, 83), 50, TextureOrientation::Z);
 	App->renderer3D->DrawTexture(WaluigiLogo, vec3(13, 20, -32), 50, TextureOrientation::Z);
-	App->renderer3D->DrawTexture(WaterDoor1, vec3(25, 17, 89.5), 30, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(WaterDoor2, vec3(25, 15, -20.5), 30, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Background, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
-	App->renderer3D->DrawTexture(Background, vec3(-10, 17, -150), 20, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Background, vec3(70, 17, -150), 15, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Background, vec3(-85, 17, -150), 15, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Background, vec3(-70, 17, -70), 55, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Background, vec3(10, 17, -70), 55, TextureOrientation::Y);
+
+	App->renderer3D->DrawTexture(Gura, vec3(25, 17, 89.5), 30, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Orcat, vec3(25, 15, -20.5), 30, TextureOrientation::Y);
+
+
+	App->renderer3D->DrawTexture(Makima, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(Wantia, vec3(-10, 17, -150), 20, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Wantia, vec3(70, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Wantia, vec3(-85, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Ina, vec3(-70, 17, -70), 55, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(KawaiiKoto, vec3(10, 17, -70), 55, TextureOrientation::Y);
 
 
 	return UPDATE_CONTINUE;

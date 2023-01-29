@@ -45,12 +45,31 @@ public:
 
 	uint Waluigi;
 	uint WaluigiLogo;
-	uint WaterDoor1;
-	uint Background;
-	uint WaterDoor2;
-	uint DirtTurnMiddle;
-	uint DirtTurnBack;
 
+
+	uint Gura;
+	uint Orcat;
+
+	uint Makima;
+	
+	uint Wantia;
+	uint Wantbro1;
+	uint Wantbro2;
+	uint Ina;
+	uint KawaiiKoto;
+
+	uint sexPau;
+	uint Wahmuel;
+
+	uint Goomba;
+
+	uint Bimu;
+	uint Rose;
+	uint Wairim;
+	uint Wakima;
+	uint Wabeni;
+	
+ 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
