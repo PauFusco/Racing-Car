@@ -27,7 +27,7 @@ bool ModuleSceneIntro::Start()
 	//App->audio->PlayMusic("Wahssets/Audio/Waluigi_theme_eurobeat.wav");
 
 	//texRandom = App->renderer3D->LoadTexture("Wahssets/Images/gurrra.jpg");
-	
+
 	Waluigi = App->renderer3D->LoadTexture("Wahssets/Images/sex2.jpg");
 	WaluigiLogo = App->renderer3D->LoadTexture("Wahssets/Images/wahlogo.jpg");
 	WaterDoor1 = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
@@ -77,6 +77,25 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	//App->renderer3D->DrawTexture(texRandom, vec3(0, 20.6, 120), 100, TextureOrientation::Z);
+
+	switch (shitpost) {
+	case ShitPostStatus::LOW:
+
+
+
+		break;
+
+	case ShitPostStatus::MEDIUM:
+
+
+		break;
+
+	case ShitPostStatus::HIGH:
+
+
+
+		break;
+	}
 
 	App->renderer3D->DrawTexture(Waluigi, vec3(13, 20, 83), 50, TextureOrientation::Z);
 	App->renderer3D->DrawTexture(WaluigiLogo, vec3(13, 20, -32), 50, TextureOrientation::Z);

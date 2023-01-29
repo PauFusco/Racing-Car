@@ -14,6 +14,14 @@ typedef high_resolution_clock Clock;
 struct PhysBody3D;
 struct PhysMotor3D;
 
+enum class ShitPostStatus
+{
+	LOW,
+	MEDIUM,
+	HIGH,
+	UNKNOWN
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -66,4 +74,6 @@ public:
 	bool bope = false;
 
 	char title[120];
+
+	ShitPostStatus shitpost;
 };
