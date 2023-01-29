@@ -420,7 +420,7 @@ void ModulePlayer::Debug()
 	}
 	else
 	{
-		vehicle->setGrav({ GravityX,GravityY,GravityZ });
+		vehicle->setGrav({ GravityX, GravityY, GravityZ });
 	}
 }
 
