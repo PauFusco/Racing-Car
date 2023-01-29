@@ -202,11 +202,11 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
-	if (vehicle->GetPos().z < -100) {
-		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 3.0;
-		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 3.0;
-		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 3.0;
-		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 3.0;
+	if (vehicle->GetPos().z < -80) {
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 2.0;
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 2.0;
 	}
 	else {
 		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 20.0;

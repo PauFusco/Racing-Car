@@ -105,8 +105,8 @@ void ModuleCircuit::LoadAllCircuitObjects()
 
 
 	// CheckPoint Flag
-	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    0.25, -170));
-	CreateWallOrFloor(vec3(0.1,  3,  3),   vec3(   0,    7.5,  -170), 0, Green);
+	CreateWallOrFloor(vec3(0.3,  7.5,  0.3), vec3( 0,    7.75, -170));
+	CreateWallOrFloor(vec3(0.1,  3,  3),   vec3(   0,    10,  -170), 0, Green);
 
 	// WIN SIGN
 	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    7.5,   125));
@@ -117,39 +117,40 @@ void ModuleCircuit::LoadAllCircuitObjects()
 }
 
 void ModuleCircuit::CreateAllBarriers()
-{
-	CreateWallOrFloor(vec3(40, 1, 1), vec3(0, 1, 125));
-	CreateWallOrFloor(vec3(40, 1, 1), vec3(0, 1, 95));
-	
-	CreateWallOrFloor(vec3(50, 1, 1), vec3(-37.5, 1, 108), -45);
-	CreateWallOrFloor(vec3( 7, 1, 1), vec3(-22.5, 1, 92.5), -45);
+{			
+	float size1 = 1.25, size2 = 1;
+	CreateWallOrFloor(vec3( 40,   1, 1), vec3(   0,   size1, 125));
+	CreateWallOrFloor(vec3( 40,   1, 1), vec3(   0,   size1,  95));
+							     
+	CreateWallOrFloor(vec3( 50,   1, 1), vec3( -37.5, size1, 108),   -45);
+	CreateWallOrFloor(vec3(  7,   1, 1), vec3( -22.5, size1,  92.5), -45);
+							     
+	CreateWallOrFloor(vec3(110,   1, 1), vec3( -55,   size1,  35), 90);
+	CreateWallOrFloor(vec3(110,   1, 1), vec3( -25,   size1,  35), 90);
+							     
+	CreateWallOrFloor(vec3( 50,   1, 1), vec3( -42.5, size1, -38), -45);
+	CreateWallOrFloor(vec3(  7,   1, 1), vec3( -57.5, size1, -22), -45);
 
-	CreateWallOrFloor(vec3(110, 1, 1), vec3(-55, 1, 35), 90);
-	CreateWallOrFloor(vec3(110, 1, 1), vec3(-25, 1, 35), 90);
-
-	CreateWallOrFloor(vec3(50, 1, 1), vec3(-42.5, 1, -38), -45);
-	CreateWallOrFloor(vec3(7, 1, 1), vec3(-57.5, 1, -22), -45);
-
-	CreateWallOrFloor(vec3(20, 1, 1), vec3(-70, 1, -25));
-	CreateWallOrFloor(vec3(20, 1, 1), vec3(-70, 1, -55));
+	CreateWallOrFloor(vec3( 20,   1, 1), vec3( -70,   size1, -25));
+	CreateWallOrFloor(vec3( 20,   1, 1), vec3( -70,   size1, -55));
 
 	//
 	//
 	
-	CreateWallOrFloor(vec3(107.5, 1, 1), vec3(-115, 0.75, -115), 90);
-	CreateWallOrFloor(vec3(90, 1, 1), vec3(-85, 0.75, -105), 90);
-
-	CreateWallOrFloor(vec3(15, 1, 1), vec3(-77.5, 0.75, -150));
-	CreateWallOrFloor(vec3(65, 1, 1), vec3(-82.5, 0.75, -170));
-
-	CreateWallOrFloor(vec3(80, 1, 1), vec3(-50, 0.75, -130), 90);
-	CreateWallOrFloor(vec3(80, 1, 1), vec3(-70, 0.75, -110), 90);
-
-	CreateWallOrFloor(vec3(60, 1, 1), vec3(-40, 0.75, -70));
-	CreateWallOrFloor(vec3(20, 1, 1), vec3(-40, 0.75, -90));
-
-	CreateWallOrFloor(vec3(80, 1, 1), vec3(-30, 0.75, -130), 90);
-	CreateWallOrFloor(vec3(80, 1, 1), vec3(-10, 0.75, -110), 90);
+	CreateWallOrFloor(vec3(107.5, 1, 1), vec3(-115,   size2, -115), 90);
+	CreateWallOrFloor(vec3( 90,   1, 1), vec3( -85,   size2, -105), 90);
+						    						 
+	CreateWallOrFloor(vec3( 15,   1, 1), vec3( -77.5, size2, -150));
+	CreateWallOrFloor(vec3( 65,   1, 1), vec3( -82.5, size2, -170));
+							     					  
+	CreateWallOrFloor(vec3( 80,   1, 1), vec3( -50,   size2, -130), 90);
+	CreateWallOrFloor(vec3( 80,   1, 1), vec3( -70,   size2, -110), 90);
+							     					  
+	CreateWallOrFloor(vec3( 60,   1, 1), vec3( -40,   size2,  -70));
+	CreateWallOrFloor(vec3( 20,   1, 1), vec3( -40,   size2,  -90));
+							     					  
+	CreateWallOrFloor(vec3( 80,   1, 1), vec3( -30,   size2, -130), 90);
+	CreateWallOrFloor(vec3( 80,   1, 1), vec3( -10,   size2, -110), 90);
 
 
 
