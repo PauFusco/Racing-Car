@@ -40,17 +40,14 @@ update_status ModuleCircuit::Update(float dt)
 		CubeListItem = CubeListItem->next;
 	}
 
+
 	PhysBodyA->GetTransform(cubeA->transform.M);
-	//PhysBodyB->GetTransform(cubeB->transform.M);
 
 	cubeA->Render();
-	//cubeB->Render();
 
 
-	//PhysBodyC->GetTransform(cubeC->transform.M);
 	PhysBodyD->GetTransform(cubeD->transform.M);
 
-	//cubeC->Render();
 	cubeD->Render();
 
 	return UPDATE_CONTINUE;
@@ -128,7 +125,7 @@ void ModuleCircuit::CreateAllFloors()
 	CreateWallOrFloor(vec3(20, 1, 30), vec3(70, 0, -40));
 
 	// Water ?
-	CreateWallOrFloor(vec3(30, 1, 110), vec3(40, 0, 35), 0, Water, ColType::WATER);
+	CreateWallOrFloor(vec3(30, 1.01, 110), vec3(40, 0, 35), 0, Water, ColType::WATER);
 
 	// x -> minx, y -> minz, z -> maxx, w -> maxz
 	WaterArea = vec4(40 - 30 / 2, 35 - 110 / 2, 40 + 30 / 2, 35 + 110 / 2);
