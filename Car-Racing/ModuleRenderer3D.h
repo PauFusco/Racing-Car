@@ -7,6 +7,14 @@
 
 #define MAX_LIGHTS 8
 
+enum class TextureOrientation
+{
+	X,
+	Y,
+	Z,
+	UNKNOWN
+};
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -23,7 +31,7 @@ public:
 	uint LoadTexture(const char* path);
 	void UnloadTexture(uint id);
 
-	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY = true);
+	void DrawTexture(uint texture, vec3 pos, float size, TextureOrientation orientation);
 
 public:
 
@@ -31,4 +39,5 @@ public:
 	SDL_GLContext context;
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	TextureOrientation orientation;
 };

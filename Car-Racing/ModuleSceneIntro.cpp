@@ -70,7 +70,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 
-	App->renderer3D->DrawTexture(texRandom, vec3(0, 25, 110), 10, true);
+	App->renderer3D->DrawTexture(texRandom, vec3(0, 20.6, 50), 100, TextureOrientation::Z);
 
 
 	return UPDATE_CONTINUE;
