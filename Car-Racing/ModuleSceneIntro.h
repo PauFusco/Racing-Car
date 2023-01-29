@@ -75,5 +75,5 @@ public:
 
 	char title[120];
 
-	ShitPostStatus shitpost;
+	ShitPostStatus shitpost = ShitPostStatus::LOW;
 };
