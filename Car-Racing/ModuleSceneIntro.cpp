@@ -17,6 +17,9 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	
+	Plane p(0, 1, 0, 0);
+	plane = p;
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
@@ -43,15 +46,26 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	level_time = duration_cast<seconds>(level_now - level_start).count();
 
-	if (level_time >= max_time)
+	if (!App->player->Win) {
+		sprintf_s(title, "If you fall a portal will teleport you to the start, don't worry! You have %d seconds left!", int(max_time - level_time));
+		App->window->SetTitle(title);
+	}
+	else
 	{
-		App->player->SetVehiclePos(App->player->startPos);
+		sprintf_s(title, "YOU WIN!!¡!!1¡!!11¡!1! (Reset in %d seconds)", int(max_time - level_time));
+		App->window->SetTitle(title);
 	}
 
-	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
+	if (level_time >= max_time)
+	{
+		App->player->Reset();
+	}
 
+	if(App->physics->debug)
+	{
+		plane.axis = true;
+		plane.Render();
+	}
 	return UPDATE_CONTINUE;
 }
 

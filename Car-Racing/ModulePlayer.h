@@ -22,11 +22,14 @@ public:
 	btVector3 CarPos();
 	vec2 CarRot();
 
+	void Movement();
+
 	bool CheckDirt();
 
 	void Debug();
 
 	void SetVehiclePos(vec3 pos);
+	void Reset();
 
 public:
 	PhysVehicle3D* vehicle;
@@ -45,4 +48,7 @@ public:
 	float GravityZ;
 
 	vec3 startPos;
+
+	bool CheckPoint = false;
+	bool Win = false;
 };

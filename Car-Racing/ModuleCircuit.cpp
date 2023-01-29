@@ -56,57 +56,70 @@ void ModuleCircuit::LoadAllCircuitObjects()
 	CreateWallOrFloor(vec3(40, 1, 30), vec3(0, 0, 110));
 	
 	// Normal
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(-30, 0, 100), -45);
-	CreateWallOrFloor(vec3(30, 1, 110), vec3(-40, 0, 35));
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(-50, 0, -30), -45);
-	CreateWallOrFloor(vec3(20, 1, 30), vec3(-70, 0, -40));
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3( -30,    0,     100), -45);
+	CreateWallOrFloor(vec3(30,   1, 110),  vec3( -40,    0,      35));
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3( -50,    0,     -30), -45);
+	CreateWallOrFloor(vec3(20,   1, 30),   vec3( -70,    0,     -40));
 	
 	// Dirt Part
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(-90, -0.25, -50), -45, Dirt, ColType::DIRT);
-	CreateWallOrFloor(vec3(30, 1, 90), vec3(-100, -0.25, -105), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3( -90,   -0.25,  -50), -45,  Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(30,   1, 90),   vec3(-100,   -0.25, -105),   0,  Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(65, 1, 20), vec3(-82.5, -0.25, -160), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(65,   1, 20),   vec3( -82.5, -0.25, -160),   0,  Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(-60, -0.25, -120), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(20,   1, 60),   vec3( -60,   -0.25, -120),   0,  Dirt, ColType::DIRT);
+	 
+	CreateWallOrFloor(vec3(60,   1, 20),   vec3( -40,   -0.25,  -80),   0,  Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(-40, -0.25, -80), 0, Dirt, ColType::DIRT);
-
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(-20, -0.25, -120), 0, Dirt, ColType::DIRT);
-	
-	// ---------------------------------------------------------------- //
-
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(0, -0.25, -160), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(20,   1, 60),   vec3( -20,   -0.25, -120),   0,  Dirt, ColType::DIRT);
 	
 	// ---------------------------------------------------------------- //
 
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(20, -0.25, -120), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(60,   1, 20),   vec3(   0,   -0.25, -160),   0,  Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(60, 1, 20), vec3(40, -0.25, -80), 0, Dirt, ColType::DIRT);
+	// ---------------------------------------------------------------- //
+
+	CreateWallOrFloor(vec3(20,   1, 60),   vec3(  20,   -0.25, -120),   0,  Dirt, ColType::DIRT);
 	
-	CreateWallOrFloor(vec3(20, 1, 60), vec3(60, -0.25, -120), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(60,   1, 20),   vec3(  40,   -0.25,  -80),   0,  Dirt, ColType::DIRT);
+	
+	CreateWallOrFloor(vec3(20,   1, 60),   vec3(  60,   -0.25, -120),   0,  Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(65, 1, 20), vec3(82.5, -0.25, -160), 0, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(65,   1, 20),   vec3(  82.5, -0.25, -160),   0,  Dirt, ColType::DIRT);
 
-	CreateWallOrFloor(vec3(30, 1, 90), vec3(100, -0.25, -105), 0, Dirt, ColType::DIRT);
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(90, -0.25, -50), 45, Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(30,   1, 90),   vec3( 100,   -0.25, -105),   0,  Dirt, ColType::DIRT);
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(  90,   -0.25,  -50),  45,  Dirt, ColType::DIRT);
 
 	// Normal
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(50, 0, -30), 45);
-	CreateWallOrFloor(vec3(20, 1, 30), vec3(70, 0, -40));
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(  50,    0,     -30), 45);
+	CreateWallOrFloor(vec3(20,   1, 30),   vec3(  70,    0,     -40));
 	
 	// Water ?
-	CreateWallOrFloor(vec3(30, 1, 110), vec3(40, 0, 35), 0, Water, ColType::WATER);
+	CreateWallOrFloor(vec3(30,   1, 110),  vec3(  40,    0,      35),   0, Water, ColType::WATER);
 	
 	// x -> minx, y -> minz, z -> maxx, w -> maxz
 	DirtArea = vec4(40 - 30 / 2, 35 - 110 / 2, 40 + 30 / 2, 35 + 110 / 2);
 
-	//Normal
-	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(30, 0, 100), 45);
+	// Normal
+	CreateWallOrFloor(vec3(49.5, 1, 21.2), vec3(  30,    0,     100),  45);
+
+
+
+	// CheckPoint Flag
+	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    0.25, -170));
+	CreateWallOrFloor(vec3(0.1,  3,  3),   vec3(   0,    7.5,  -170), 0, Green);
+
+	// WIN SIGN
+	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    7.5,   125));
+	CreateWallOrFloor(vec3(0.3, 15,  0.3), vec3(   0,    7.5,    95));
+	CreateWallOrFloor(vec3(0.1,  5, 30),   vec3(   0,   12.5,   110));
 }
 
 // Position is the one of the center of mass (center of the cube)
 void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color color, ColType type)
 {
+	pos.y += 20;
+
 	// Create rigid body
 	btBoxShape* floorshape = new btBoxShape(btVector3(size.x / 2, size.y / 2, size.z / 2));
 	btCollisionShape* colShape = floorshape;
@@ -117,12 +130,13 @@ void ModuleCircuit::CreateWallOrFloor(vec3 size, vec3 pos, float angle, Color co
 
 	btRigidBody* body = new btRigidBody(0, myMotionState, colShape);
 
-
-	if (type == ColType::DIRT) {
-		body->setFriction(.4);
+	if (type == ColType::DIRT)
+	{
+		body->setFriction(btScalar(0.00001));
 	}
-	else body->setFriction(0.0);
-
+	else
+		body->setFriction(btScalar(10.0));
+	
 	// Add the rigid to the world
 	App->physics->world->addRigidBody(body);
 	

@@ -57,3 +57,8 @@ vec3 PhysBody3D::GetPos()
 
 	return pos;
 }
+
+void PhysBody3D::SetAngularVelocity(float x, float y, float z)
+{
+	body->setAngularVelocity({ x, y, z });
+}

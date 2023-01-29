@@ -47,9 +47,15 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
+	Plane plane;
+
 	steady_clock::time_point level_start;
 	steady_clock::time_point level_now;
 
 	long long level_time;
-	long long max_time = 60;
+	long long max_time = 50;
+
+	bool bope = false;
+
+	char title[120];
 };

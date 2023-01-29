@@ -28,6 +28,8 @@ public:
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
 
+	void SetAngularVelocity(float x, float y, float z);
+
 	vec3 GetPos();
 
 private:

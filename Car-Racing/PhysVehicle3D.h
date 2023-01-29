@@ -53,8 +53,6 @@ public:
 	void Turn(float degrees);
 	float GetKmh() const;
 
-	void SetWheelFriction(float friction);
-
 public:
 
 	VehicleInfo info;

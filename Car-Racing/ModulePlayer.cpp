@@ -5,6 +5,11 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+#include <chrono>
+using namespace std;
+using namespace chrono;
+typedef high_resolution_clock Clock;
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -28,7 +33,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 20.0;
+	car.frictionSlip = 5.0;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -98,7 +103,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 
-	startPos = vec3(0, 2, 110);
+	startPos = vec3(0, 22, 110);
 
 	vehicle->SetPos(startPos.x, startPos.y, startPos.z);
 	//vehicle->SetTransform();
@@ -164,42 +169,7 @@ vec2 ModulePlayer::CarRot()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = brake = 0.0f;
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		acceleration = MAX_ACCELERATION;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		acceleration = -MAX_ACCELERATION;
-	}
-
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
-	vehicle->Brake(brake);
-
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
-	{
-		vehicle->Push(0, 200, 0);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
-	{
-		vehicle->Push(10, 100, 0);
-	}
+	Movement();
 
 	//if (App->input->GetKey(SDL_SCANCODE_V) == KEY_REPEAT)
 	{
@@ -243,25 +213,86 @@ update_status ModulePlayer::Update(float dt)
 		
 	}
 
+	if (vehicle->GetPos().y <= 10)
+	{
+		Reset();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		vehicle->SetPos(0.0, 20.25, -160);
+	}
+
+	if (vehicle->GetPos().z < -150)
+	{
+		if (0.1 > vehicle->GetPos().x > -0.1)
+		{
+			CheckPoint = true;
+		}
+	}
+
+	if (CheckPoint)
+	{
+		if (vehicle->GetPos().z > 95)
+		{
+			if (0.1 > vehicle->GetPos().x > -0.1)
+			{
+				Win = true;
+			}
+		}
+	}
+
 	if (CheckDirt())
 		vehicle->info.frictionSlip = 0.1;
 	else
 		vehicle->info.frictionSlip = 20.0;
 
 	
-	
-
-	
 	Debug();
-	
 	
 	vehicle->Render();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->vehicle->getChassisWorldTransform().getRotation().getY());
-	App->window->SetTitle(title);
-
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::Movement()
+{
+	turn = acceleration = brake = 0.0f;
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		acceleration = MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (turn > -TURN_DEGREES)
+			turn -= TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		acceleration = -MAX_ACCELERATION;
+	}
+
+	vehicle->ApplyEngineForce(acceleration);
+	vehicle->Turn(turn);
+	vehicle->Brake(brake);
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
+		vehicle->Push(0, 200, 0);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_REPEAT)
+	{
+		vehicle->Push(10, 100, 0);
+	}
 }
 
 bool ModulePlayer::CheckDirt()
@@ -339,4 +370,14 @@ void ModulePlayer::Debug()
 void ModulePlayer::SetVehiclePos(vec3 pos)
 {
 	vehicle->SetPos(pos.x, pos.y, pos.z);
+}
+
+void ModulePlayer::Reset()
+{
+	vehicle->SetAngularVelocity(0, 0, 0);
+	SetVehiclePos(startPos);
+
+	CheckPoint = false, Win = false;
+
+	App->scene_intro->level_start = Clock::now();
 }
