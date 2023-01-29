@@ -4,7 +4,6 @@
 #include "glmath.h"
 #include "Light.h"
 #include "glut/glut.h"
-#include "SDL_image/include/SDL_image.h"
 
 #define MAX_LIGHTS 8
 
