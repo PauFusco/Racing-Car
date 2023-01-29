@@ -41,10 +41,17 @@ update_status ModuleCircuit::Update(float dt)
 	}
 
 	PhysBodyA->GetTransform(cubeA->transform.M);
-	PhysBodyB->GetTransform(cubeB->transform.M);
+	//PhysBodyB->GetTransform(cubeB->transform.M);
 
 	cubeA->Render();
-	cubeB->Render();
+	//cubeB->Render();
+
+
+	//PhysBodyC->GetTransform(cubeC->transform.M);
+	PhysBodyD->GetTransform(cubeD->transform.M);
+
+	//cubeC->Render();
+	cubeD->Render();
 
 	return UPDATE_CONTINUE;
 }
@@ -65,7 +72,8 @@ void ModuleCircuit::LoadAllCircuitObjects()
 
 	CreateAllBarriers();
 
-	CreateDoor();
+	CreateDoor1();
+	CreateDoor2();
 }
 
 void ModuleCircuit::CreateAllFloors()
@@ -204,17 +212,17 @@ void ModuleCircuit::CreateAllBarriers()
 
 }
 
-void ModuleCircuit::CreateDoor()
+void ModuleCircuit::CreateDoor1()
 {
 	vec3 size, posA, posB;
-	size = vec3(5, 10, 1);
-	posA = vec3(-30, 26, 30);
+	size = vec3(10, 11, 1);
+	posA = vec3(-32, 26, 30);
 	posB = vec3(-25, 26, 30);
 	float angle = 0;
 
 	// Create primitive
 	cubeA = new Cube(size.x, size.y, size.z);
-	cubeB = new Cube(size.x, size.y, size.z);
+	cubeB = new Cube(size.x / 2, size.y, size.z);
 
 	cubeA->SetPos(posA.x, posA.y, posA.z);
 	cubeA->SetRotation(angle, vec3(0, 1, 0));
@@ -225,10 +233,31 @@ void ModuleCircuit::CreateDoor()
 	PhysBodyA = App->physics->AddBody(*cubeA, 100);
 	PhysBodyB = App->physics->AddBody(*cubeB, 0);
 
-	App->physics->AddConstraintHinge(*PhysBodyA, *PhysBodyB, vec3(4,0,0), vec3(-4,0,0), vec3(0,1,0), vec3(0,-1,0), true);
+	App->physics->AddConstraintHinge(*PhysBodyA, *PhysBodyB, vec3(5,0,0), vec3(-4,0,0), vec3(0,1,0), vec3(0,-1,0), true);
+}
 
-	
+void ModuleCircuit::CreateDoor2()
+{
+	vec3 size, posA, posB;
+	size = vec3(10, 11, 1);
+	posA = vec3(-52, 26, 30);
+	posB = vec3(-45, 26, 30);
+	float angle = 0;
 
+	// Create primitive
+	cubeC = new Cube(size.x / 2, size.y, size.z);
+	cubeD = new Cube(size.x, size.y, size.z);
+
+	cubeC->SetPos(posA.x, posA.y, posA.z);
+	cubeC->SetRotation(angle, vec3(0, 1, 0));
+
+	cubeD->SetPos(posB.x, posB.y, posB.z);
+	cubeD->SetRotation(angle, vec3(0, 1, 0));
+
+	PhysBodyC = App->physics->AddBody(*cubeC, 0);
+	PhysBodyD = App->physics->AddBody(*cubeD, 100);
+
+	App->physics->AddConstraintHinge(*PhysBodyD, *PhysBodyC, vec3(-4, 0, 0), vec3(4, 0, 0), vec3(0, 1, 0), vec3(0, -1, 0), true);
 }
 
 // Position is the one of the center of mass (center of the cube)

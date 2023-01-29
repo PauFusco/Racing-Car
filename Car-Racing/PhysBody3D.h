@@ -30,6 +30,8 @@ public:
 
 	void SetAngularVelocity(float x, float y, float z);
 
+	void setGrav(vec3 g);
+
 	vec3 GetPos();
 
 private:

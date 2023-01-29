@@ -412,6 +412,16 @@ void ModulePlayer::Debug()
 	}
 
 	App->physics->world->setGravity(btVector3(GravityX, GravityY, GravityZ));
+
+
+	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT)
+	{
+		vehicle->setGrav({ 0,0,0 });
+	}
+	else
+	{
+		vehicle->setGrav({ GravityX,GravityY,GravityZ });
+	}
 }
 
 void ModulePlayer::SetVehiclePos(vec3 pos)

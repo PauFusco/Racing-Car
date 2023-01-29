@@ -23,7 +23,8 @@ public:
 	void CreateAllFloors();
 	void CreateAllBarriers();
 
-	void CreateDoor();
+	void CreateDoor1();
+	void CreateDoor2();
 
 	void LoadAllCircuitObjects();
 
@@ -41,4 +42,14 @@ public:
 
 	vec3 posA;
 	vec3 posB;
+
+
+	PhysBody3D* PhysBodyC;
+	PhysBody3D* PhysBodyD;
+
+	Cube* cubeC;
+	Cube* cubeD;
+
+	vec3 posC;
+	vec3 posD;
 };
