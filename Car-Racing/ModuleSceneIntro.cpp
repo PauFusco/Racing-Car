@@ -34,10 +34,10 @@ bool ModuleSceneIntro::Start()
 	Orcat = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
 	Makima = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	Wantia = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
-	Wantbro1 = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
-	Wantbro2 = App->renderer3D->LoadTexture("Wahssets/Images/wantia.jpg");
+	Wantbro1 = App->renderer3D->LoadTexture("Wahssets/Images/Wantbro1.jpg");
+	Wantbro2 = App->renderer3D->LoadTexture("Wahssets/Images/Wantbro2.jpg");
 	Ina = App->renderer3D->LoadTexture("Wahssets/Images/Ina.jpg");
-	KawaiiKoto = App->renderer3D->LoadTexture("Wahssets/Images/Kawaii.jpg");
+	KawaiiKoto = App->renderer3D->LoadTexture("Wahssets/Images/Goomba.jpg");
 
 	//sexPau = App->renderer3D->LoadTexture("Wahssets/Images/Sex.jpg");
 	//Wahmuel = App->renderer3D->LoadTexture("Wahssets/Images/Wahmuel.jpg");
@@ -120,8 +120,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	App->renderer3D->DrawTexture(Makima, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
 	App->renderer3D->DrawTexture(Wantia, vec3(-10, 17, -150), 20, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Wantia, vec3(70, 17, -150), 15, TextureOrientation::Y);
-	App->renderer3D->DrawTexture(Wantia, vec3(-85, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Wantbro1, vec3(70, 17, -150), 15, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(Wantbro2, vec3(-85, 17, -150), 15, TextureOrientation::Y);
 	App->renderer3D->DrawTexture(Ina, vec3(-70, 17, -70), 55, TextureOrientation::Y);
 	App->renderer3D->DrawTexture(KawaiiKoto, vec3(10, 17, -70), 55, TextureOrientation::Y);
 
