@@ -61,9 +61,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	camPos = App->player->CarRot();
 
-	Position.x = App->player->CarPos().x() + camPos.x * 50;
+	Position.x = App->player->CarPos().x() - camPos.x * 50;
 	Position.y = App->player->CarPos().y() + 50;
-	Position.z = App->player->CarPos().z() + camPos.y * 50;
+	Position.z = App->player->CarPos().z() - camPos.y * 50;
 
 	Position += newPos;
 	Reference += newPos;
