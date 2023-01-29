@@ -36,6 +36,9 @@ public:
 	*/
 
 	uint texRandom;
+	uint texRandom2;
+	uint texRandom3;
+	uint texRandom4;
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;

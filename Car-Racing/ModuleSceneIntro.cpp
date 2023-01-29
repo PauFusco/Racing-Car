@@ -26,7 +26,12 @@ bool ModuleSceneIntro::Start()
 
 	//App->audio->PlayMusic("Wahssets/Audio/Waluigi_theme_eurobeat.wav");
 
-	texRandom = App->renderer3D->LoadTexture("Wahssets/Images/sexual.png");
+	//texRandom = App->renderer3D->LoadTexture("Wahssets/Images/gurrra.jpg");
+	texRandom = App->renderer3D->LoadTexture("Wahssets/Images/sex2.jpg");
+	texRandom2 = App->renderer3D->LoadTexture("Wahssets/Images/Wah.jpg");
+	texRandom4 = App->renderer3D->LoadTexture("Wahssets/Images/Lily.jpg");
+	texRandom3 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
+	//texRandom5 = App->renderer3D->LoadTexture("Wahssets/Images/Makima.jpg");
 	
 	level_start = Clock::now();
 
@@ -69,9 +74,12 @@ update_status ModuleSceneIntro::Update(float dt)
 		plane.Render();
 	}
 
+	//App->renderer3D->DrawTexture(texRandom, vec3(0, 20.6, 120), 100, TextureOrientation::Z);
 
-	App->renderer3D->DrawTexture(texRandom, vec3(0, 20.6, 50), 100, TextureOrientation::Z);
-
+	App->renderer3D->DrawTexture(texRandom, vec3(13, 20, 83), 50, TextureOrientation::Z);
+	App->renderer3D->DrawTexture(texRandom2, vec3(25, 17, 89.5), 30, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(texRandom4, vec3(25, 15, -20.5), 30, TextureOrientation::Y);
+	App->renderer3D->DrawTexture(texRandom3, vec3(-500, 0, -500), 1000, TextureOrientation::Z);
 
 	return UPDATE_CONTINUE;
 }
