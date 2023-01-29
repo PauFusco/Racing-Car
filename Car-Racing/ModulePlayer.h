@@ -32,6 +32,8 @@ public:
 
 	void Debug();
 
+	void CreateVehicle();
+
 	void SetVehiclePos(vec3 pos);
 	void Reset();
 
@@ -53,6 +55,12 @@ public:
 	float GravityZ;
 
 	vec3 startPos;
+
+
+	unsigned int deathFx;
+	unsigned int winFx;
+	unsigned int checkpointFx;
+
 
 	bool CheckPoint = false;
 	bool Win = false;
