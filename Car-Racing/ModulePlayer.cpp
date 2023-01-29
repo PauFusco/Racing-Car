@@ -339,30 +339,30 @@ void ModulePlayer::BouMov()
 
 		//LOG("the axis is this: %f", aaa.z());
 
-	if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
+		if (aaa.z() > 25 && aaa.y() - 1 < 10) //here you have to define the water area, the -1 is there to make it calculate the bottom of the car, 10 is the surface, you can change it
 		{
 			float Fb, Fd;
-		
+
 			float Vol;
 			Vol = (25 - aaa.y() - 1) - (25 - aaa.y() + 1);
 			if ((25 - aaa.y() + 1) > 25)
 			{
 				Vol = (25 - aaa.y() - 1);
 			}
-		
+
 			float density;
-		
+
 			density = 10;
-		
+
 			Fb = (density * GRAVITY.y() * Vol) * 0.6;
-		
+
 			if (vehicle->GetKmh() > 10) // this is not a perfect way of doing it but it is the best that i've been able to do so far
 			{
 				Fd = 99 * vehicle->GetKmh() / 3.6;   // the value on the left can be modified
-		
+
 				vehicle->ApplyEngineForce(-Fd / vehicle->info.mass);
 			}
-		
+
 			vehicle->Push(0, Fb, 0);
 		}
 
