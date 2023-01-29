@@ -20,8 +20,10 @@ public:
 
 	void OnResize(int width, int height);
 
-	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY);
 	uint LoadTexture(const char* path);
+	void UnloadTexture(uint id);
+
+	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY = true);
 
 public:
 

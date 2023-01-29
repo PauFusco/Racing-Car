@@ -35,6 +35,8 @@ public:
 	Sphere s_snake2[MAX_SNAKE];
 	*/
 
+	uint texRandom;
+
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
 

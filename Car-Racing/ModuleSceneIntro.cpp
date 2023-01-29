@@ -26,6 +26,8 @@ bool ModuleSceneIntro::Start()
 
 	//App->audio->PlayMusic("Wahssets/Audio/Waluigi_theme_eurobeat.wav");
 
+	texRandom = App->renderer3D->LoadTexture("Wahssets/Images/sexual.png");
+	
 	level_start = Clock::now();
 
 	return ret;
@@ -66,6 +68,11 @@ update_status ModuleSceneIntro::Update(float dt)
 		plane.axis = true;
 		plane.Render();
 	}
+
+
+	App->renderer3D->DrawTexture(texRandom, vec3(0, 25, 110), 10, true);
+
+
 	return UPDATE_CONTINUE;
 }
 

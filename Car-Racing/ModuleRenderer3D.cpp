@@ -4,11 +4,13 @@
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "SDL_image/include/SDL_image.h"
-
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+
+#include "SDL_image/include/SDL_image.h"
+#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -136,6 +138,8 @@ bool ModuleRenderer3D::CleanUp()
 
 	SDL_GL_DeleteContext(context);
 
+	IMG_Quit();
+
 	return true;
 }
 
@@ -153,9 +157,36 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
+uint ModuleRenderer3D::LoadTexture(const char* path) {
+	LOG("Loading texture");
+	SDL_Surface* surface = IMG_Load(path);
 
+	if (surface == NULL)
+	{
+		LOG("error loading image %s", IMG_GetError());
+		return 0;
+	}
+
+	Uint32 texture = NULL;
+
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+	int ret = glGetError();
+	if (ret != GL_NO_ERROR)
+	{
+		LOG("GL Error in loadTexture: %i", ret);
+	}
+
+	SDL_FreeSurface(surface);
+	return texture;
+}
 void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orientationY) {
-
+	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -179,32 +210,4 @@ void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orie
 
 	glDisable(GL_TEXTURE_2D);
 
-}
-uint ModuleRenderer3D::LoadTexture(const char* path) {
-	LOG("Loading texture");
-	SDL_Surface* surface = IMG_Load(path);
-
-	if (surface == NULL)
-	{
-		LOG("error loading image %s", IMG_GetError());
-		return 0;
-	}
-
-	Uint32 texture = NULL;
-
-	glGenTextures(1, &texture);
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-	int ret = glGetError();
-	if (ret != GL_NO_ERROR)
-	{
-		LOG("GL Error in loadTexture: %i", ret);
-	}
-
-	SDL_FreeSurface(surface);
-	return texture;
 }
